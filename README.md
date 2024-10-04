@@ -8,3 +8,14 @@ Spider3 is an enumeration and penetration testing tool designed to help you find
 - Checks for live subdomains and saves them in `livehost.txt`.
 - Performs URL enumeration on live subdomains and saves the results in `urls.txt`.
 - Simple and easy-to-use with just one command.
+
+## Installation & Usage Guide for Spider3
+- Clone the Spider3 repository: To install the tool, simply clone the repository from GitHub:
+ `git clone https://github.com/Spid3heX/spider3.git`
+ `cd spider3`
+## Usage Note
+- Running the Tool: To start the enumeration process, make sure to run the command with the argument run. For example:
+  `./spider3.py run`
+- To fix any shebang issues on Linux, first install dos2unix by running:
+- Install dos2unix using sudo `apt install dos2unix`, then convert the script with `dos2unix spider3.py` to remove Windows-style line endings. After that, run the tool with   `./spider3.py run`.
+
