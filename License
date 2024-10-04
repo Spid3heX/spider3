@@ -1,0 +1,15 @@
+### Steps:
+1. **Install dependencies**:
+   - `subfinder`: Subdomain discovery.
+   - `httpx`: HTTP probing for live hosts.
+   - `waybackurls`: URL extraction from Wayback Machine.
+
+2. **Test the tool**:
+   - Run the tool using `./spider3.py`.
+   
+3. **Outputs**:
+   - `subdomain.txt`: All found subdomains.
+   - `livehost.txt`: Live subdomains.
+   - `urls.txt`: URLs from `waybackurls`.
+
+This setup is now automated and outputs everything in the folder for the target domain.
