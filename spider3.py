@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 
 import os
 import subprocess
@@ -6,16 +6,12 @@ import requests
 import sys
 from termcolor import colored
 
-# Banner function using figlet for Spider3 tool name and normal text for "created by"
+# Banner function
 def banner():
-    # Using subprocess to run figlet for the Spider3 tool name
-    figlet_text = subprocess.run("Spider3 Enumeration Tool", shell=True, capture_output=True, text=True)
-    
-    # Printing the figlet text and keeping other details intact
-    print(colored(figlet_text.stdout, "green"))  # Spider3 ASCII art banner
     print(colored("=======================================", "green"))
-    print(colored("                create by heXliO v1.0", "red"))  # Your requested text
+    print(colored("      Spider3 Enumeration Tool         ", "green"))
     print(colored("=======================================", "green"))
+    print(colored("                create by heXliO v1.0", "red"))  
 
 # Function to create necessary files and directories
 def setup(domain):
