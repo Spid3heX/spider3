@@ -17,10 +17,10 @@ TOOL_NAME = "Spider3 Enumeration"
 
 # Figlet banner function
 def banner():
-    figlet_banner = pyfiglet.figlet_format(TOOL_NAME)
-    print(colored(figlet_banner, "blue"))
-    print(colored(f"                {CREATOR}", "yellow"))
-    print(colored(f"[INF] Current {TOOL_NAME} version {VERSION}", "yellow"))
+    figlet_banner = pyfiglet.figlet_format("Spider3", font="slant") + pyfiglet.figlet_format("Enumeration", font="slant")
+    print(colored(figlet_banner, "blue") + colored(figlet_banner, "red"))
+    print(colored(f"                {CREATOR}", "blue"))
+    print(colored(f"[INF] Current Spider3 Enumeration version {VERSION}", "yellow"))
 
 # Function to create necessary files and directories
 def setup(domain):
@@ -34,19 +34,20 @@ def setup(domain):
 def find_subdomains(domain):
     subdomains = set()
     print(colored(f"[INF] Enumerating subdomains for {domain}...", "yellow"))
-    command = f"subfinder -d {domain} -silent"
+    command = f"subfinder -d {domain} -silent"  # Using subfinder as an example
     try:
         start_time = time.time()
         result = subprocess.run(command, shell=True, capture_output=True, text=True, check=True)
         subdomain_list = result.stdout.splitlines()
-
+        
+        # Display each subdomain directly
         for subdomain in subdomain_list:
             subdomains.add(subdomain)
-            print(colored(f"[INF] Found subdomain: {subdomain}", "white"))
-
+            print(colored(f"{subdomain}", "white"))
+        
         elapsed_time = time.time() - start_time
         print(colored(f"[INF] Found {len(subdomain_list)} subdomains for {domain} in {elapsed_time:.2f} seconds", "yellow"))
-
+        
     except subprocess.CalledProcessError as e:
         print(colored(f"Error running subfinder: {e}", "red"))
     except FileNotFoundError:
@@ -56,7 +57,7 @@ def find_subdomains(domain):
 # Check live subdomains with concurrent requests
 def check_live_subdomains(subdomains):
     live_subdomains = set()
-    print(colored("[INF] Checking for live subdomains...", "yellow"))
+    print(colored("\n[INF] Checking for live subdomains...", "yellow"))
 
     def check_subdomain(subdomain):
         protocols = ['http', 'https']
@@ -64,14 +65,14 @@ def check_live_subdomains(subdomains):
             try:
                 url = f"{protocol}://{subdomain}"
                 response = requests.get(url, timeout=3)
-                if response.status_code in [200, 403, 404]:
-                    color = "green" if response.status_code == 200 else "blue"
-                    print(colored(f"Live: {url}", "white") + colored(f" [Status: {response.status_code}]", color))
-                    if response.status_code == 200:
-                        return url
+                status = response.status_code
+                if status == 200:
+                    print(colored(f"Live: {url} ", "white") + colored("[Status: 200]", "green"))
+                    return url
+                else:
+                    print(colored(f"Dead: {subdomain} ", "white") + colored(f"[Status: {status}]", "blue"))
             except (requests.ConnectionError, requests.Timeout):
                 pass
-        print(colored(f"Dead: {subdomain}", "white") + colored(" [Status: Dead]", "red"))
         return None
 
     with ThreadPoolExecutor(max_workers=10) as executor:
@@ -82,49 +83,50 @@ def check_live_subdomains(subdomains):
 
 # URL enumeration for live subdomains
 def enumerate_urls(live_subdomains):
-    print(colored("[INF] Performing URL enumeration on live hosts...", "yellow"))
-    urls = set()
-    common_paths = ["robots.txt", "security.txt", "wp-admin", "xmlrpc.php"]
-
+    urls_to_check = [
+        "/robots.txt", "/sitemap.xml", "/wp-admin.php", "/admin.php", "/login.php", "/config.php", 
+        "/wp-config.php", "/server-status", "/admin", "/administrator", "/admin/login", "/user/login", 
+        "/phpinfo.php", "/backup.zip", "/debug.php", "/test.php", "/api", "/upload.php", "/hidden/",
+        "/private/", "/restricted/", "/portal/", "/internal/", "/secret/", "/backup/", "/old/", "/dev/",
+        "/beta/", "/staging/", "/tmp/", "/logs/", "/error.log", "/errors.log", "/access.log", "/adminpanel/",
+        "/manage/", "/control/", "/dashboard/", "/cgi-bin/", "/uploads/", "/forgot_password.php", 
+        "/signup.php", "/old-admin/", "/api-docs/", "/webmail/", "/mailadmin/", "/shell.php", "/dbadmin/",
+        "/console/", "/config/."
+    ]
+    
+    print(colored("\n[INF] Performing URL enumeration on live hosts...", "yellow"))
     for subdomain in live_subdomains:
-        for path in common_paths:
-            url = f"{subdomain}/{path}"
+        for url_suffix in urls_to_check:
+            url = f"{subdomain}{url_suffix}"
             try:
                 response = requests.get(url, timeout=3)
-                if response.status_code == 200:
-                    urls.add(url)
-                    print(colored(f"[INF] Enumerating URL: {url}", "green"))
+                status = response.status_code
+                if status == 200:
+                    print(colored(f"[INF] Enumerating URL: {url}", "white"))
+                    print(colored(f"[INF] Trying URL: {url} [Found]", "green"))
                 else:
-                    print(colored(f"[INF] Trying URL: {url} [Status: {response.status_code}]", "yellow"))
+                    print(colored(f"[INF] Trying URL: {url}", "blue"))
             except (requests.ConnectionError, requests.Timeout):
-                print(colored(f"[INF] Failed to reach URL: {url}", "red"))
-
-    return urls
+                pass
 
 # Argument parser for command line usage
 def parse_args():
     parser = argparse.ArgumentParser(description='Spider3 Enumeration Tool')
-    parser.add_argument('command', help='Command to run the tool (use "run")')
+    parser.add_argument('command', help='Command to run the tool (run)')
     return parser.parse_args()
 
 # Main process
 def main():
     args = parse_args()
-    
-    if args.command.lower() != 'run':
-        print(colored("Error: Invalid command. Use './spider3.py run' to execute.", "red"))
+    if args.command != 'run':
+        print(colored("Error: Invalid command. Usage: ./spider3.py run", "red"))
         return
-
-    # Display banner and version information
+    
     banner()
-
-    # Get the target domain from the user
-    domain = input(colored("Enter Target Domain: ", "white"))
-
-    # Setup environment (create files and directories)
+    domain = input(colored("Enter Target Domain: ", "red", attrs=['bold']))
     setup(domain)
 
-    # Finding subdomains
+    # Enumerating subdomains
     subdomains = find_subdomains(domain)
     with open(f"{domain}/subdomain.txt", 'w') as f:
         f.write('\n'.join(subdomains))
@@ -135,12 +137,9 @@ def main():
         f.write('\n'.join(live_subdomains))
 
     # URL enumeration
-    urls = enumerate_urls(live_subdomains)
-    with open(f"{domain}/urls.txt", 'w') as f:
-        f.write('\n'.join(urls))
-
-    # Completion message
+    enumerate_urls(live_subdomains)
     print(colored(f"Enumeration process for {domain} completed.", "green"))
 
 if __name__ == "__main__":
     main()
+
