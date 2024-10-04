@@ -13,9 +13,10 @@ Spider3 is an enumeration and penetration testing tool designed to help you find
 - Clone the Spider3 repository: To install the tool, simply clone the repository from GitHub:
  `git clone https://github.com/Spid3heX/spider3.git`
  `cd spider3`
-## Usage Note
+ `chmod +x spider3.py`
 - Running the Tool: To start the enumeration process, make sure to run the command with the argument run. For example:
   `./spider3.py run`
+  ## Usage Note
 - To fix any shebang issues on Linux, first install dos2unix by running:
-- Install dos2unix using sudo `apt install dos2unix`, then convert the script with `dos2unix spider3.py` to remove Windows-style line endings. After that, run the tool with   `./spider3.py run`.
+  Install dos2unix using sudo `apt install dos2unix`, then convert the script with `dos2unix spider3.py` to remove Windows-style line endings. After that, run the tool with   `./spider3.py run`.
 
