@@ -17,8 +17,11 @@ TOOL_NAME = "Spider3 Enumeration"
 
 # Figlet banner function
 def banner():
-    figlet_banner = pyfiglet.figlet_format("Spider3", font="slant") + pyfiglet.figlet_format("Enumeration", font="slant")
-    print(colored(figlet_banner, "blue") + colored(figlet_banner, "red"))
+    figlet_banner_spider = pyfiglet.figlet_format("Spider3", font="slant")
+    figlet_banner_enum = pyfiglet.figlet_format("Enumeration", font="slant")
+
+    # Show Spider3 in red and Enumeration in white
+    print(colored(figlet_banner_spider, "red") + colored(figlet_banner_enum, "white"))
     print(colored(f"                {CREATOR}", "blue"))
     print(colored(f"[INF] Current Spider3 Enumeration version {VERSION}", "yellow"))
 
@@ -142,4 +145,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
