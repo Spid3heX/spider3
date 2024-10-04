@@ -9,7 +9,7 @@ from termcolor import colored
 # Banner function using figlet for Spider3 tool name and normal text for "created by"
 def banner():
     # Using subprocess to run figlet for the Spider3 tool name
-    figlet_text = subprocess.run("figlet Spider3", shell=True, capture_output=True, text=True)
+    figlet_text = subprocess.run("Spider3 Enumeration Tool", shell=True, capture_output=True, text=True)
     
     # Printing the figlet text and keeping other details intact
     print(colored(figlet_text.stdout, "green"))  # Spider3 ASCII art banner
