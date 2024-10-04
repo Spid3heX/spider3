@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 import subprocess
 import requests
 import argparse
@@ -24,6 +25,21 @@ def banner():
     print(colored(figlet_banner_spider, "red") + colored(figlet_banner_enum, "white"))
     print(colored(f"                {CREATOR}", "blue"))
     print(colored(f"[INF] Current Spider3 Enumeration version {VERSION}", "yellow"))
+
+def main():
+    if len(sys.argv) < 2 or sys.argv[1] != 'run':
+        print(colored("[ERR] Invalid command!", "red"))
+        print(colored("Usage: ./spider3.py run", "green"))
+        sys.exit(1)  # Exit the program if the correct command is not provided
+
+    args = parse_args()
+    domain = args.domain
+    banner()  # Display banner before starting
+    setup(domain)
+
+    subdomains = find_subdomains(domain)
+    live_subdomains = check_live_subdomains(subdomains)
+    urls = enumerate_urls(live_subdomains)
 
 # Function to create necessary files and directories
 def setup(domain):
