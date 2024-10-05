@@ -19,8 +19,8 @@ TOOL_NAME = "Spider3Running"
 # Figlet banner function
 def banner():
     figlet_banner = pyfiglet.figlet_format("Spider3Running", font="slant")
-    print(colored(figlet_banner, "red", attrs=['bold']))
-    print(colored(f"                          {CREATOR}", "blue"))
+    print(colored(figlet_banner, "white", attrs=['bold']))
+    print(colored(f"                               {CREATOR}", "blue", attrs=['bold']))
     
     # Set version color based on status
     if "latest" in VERSION:
@@ -126,14 +126,7 @@ def check_live_subdomains(subdomains):
 # URL enumeration for live subdomains
 def enumerate_urls(live_subdomains):
     urls_to_check = [
-        "/robots.txt", "/sitemap.xml", "/wp-admin.php", "/admin.php", "/login.php", "/config.php", 
-        "/wp-config.php", "/server-status", "/admin", "/administrator", "/admin/login", "/user/login", 
-        "/phpinfo.php", "/backup.zip", "/debug.php", "/test.php", "/api", "/upload.php", "/hidden/",
-        "/private/", "/restricted/", "/portal/", "/internal/", "/secret/", "/backup/", "/old/", "/dev/",
-        "/beta/", "/staging/", "/tmp/", "/logs/", "/error.log", "/errors.log", "/access.log", "/adminpanel/",
-        "/manage/", "/control/", "/dashboard/", "/cgi-bin/", "/uploads/", "/forgot_password.php", 
-        "/signup.php", "/old-admin/", "/api-docs/", "/webmail/", "/mailadmin/", "/shell.php", "/dbadmin/",
-        "/console/", "/config/"
+        "/robots.txt", "/sitemap.xml", "/wp-admin.php", "/admin.php", "/login.php", "/config.php", "/wp-config.php", "/server-status", "/admin", "/administrator", "/phpinfo.php", "/backup.zip", "/debug.php", "/test.php", "/upload.php", "/hidden/", "/private/", "/portal/", "/secret/", "/backup/", "/old/", "/dev/", "/beta/", "/staging/", "/error.log", "/forgot_password.php", "/shell.php", "/uploads/", "/console/"
     ]
     
     print(colored("\nPerforming URL enumeration on live hosts...", "cyan", attrs=['bold']))
