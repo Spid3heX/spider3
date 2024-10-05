@@ -11,6 +11,8 @@ Spider3 is an enumeration and penetration testing tool designed to help you find
 - Performs URL enumeration on live subdomains and saves the results in `urls.txt`.
 - Simple and easy-to-use with just one command.
 
+![rsz_11a_spid3hex_property](https://github.com/user-attachments/assets/189ce2f6-afd3-4462-8d2f-de7bf2be4ec2)
+
 ## Installation & Usage Guide for Spider3
 - Clone the Spider3 repository: To install the tool, simply clone the repository from GitHub:
  `git clone https://github.com/Spid3heX/spider3.git`
@@ -18,9 +20,6 @@ Spider3 is an enumeration and penetration testing tool designed to help you find
  `chmod +x spider3.py`
 - Running the Tool: To start the enumeration process, make sure to run the command with the argument run. For example:
   `./spider3.py run`
-
-![a spid3heX property](https://github.com/user-attachments/assets/e4d68bb1-8b4c-4944-8314-47052dbbc3a7)
-  
   ## Usage Note
 - To fix any shebang issues on Linux:
   Install dos2unix using sudo `apt install dos2unix`, then convert the script with `dos2unix spider3.py` to remove Windows-style line endings. After that, run the tool with   `./spider3.py run`.
