@@ -65,6 +65,21 @@ def setup(domain):
     open(f"{domain}/livehost.txt", 'w').close()
     open(f"{domain}/urls.txt", 'w').close()
 
+# Save data function
+def save_data(data_type, domain, data):
+    """Saves data based on the type (subdomains, livehosts, or urls)."""
+    file_map = {
+        "subdomains": f"{domain}/subdomain.txt",
+        "livehosts": f"{domain}/livehost.txt",
+        "urls": f"{domain}/urls.txt"
+    }
+    if data_type in file_map:
+        with open(file_map[data_type], 'a') as file:
+            for item in data:
+                file.write(f"{item}\n")
+    else:
+        print(colored("[ERR] Invalid data type for saving.", "red"))
+
 # Subdomain finder using subfinder
 def find_subdomains(domain):
     subdomains = set()
@@ -83,6 +98,9 @@ def find_subdomains(domain):
         elapsed_time = time.time() - start_time
         print(colored(f"Found {len(subdomain_list)} subdomains for {colored(domain, 'white')} in {elapsed_time:.2f} seconds", "yellow"))
         
+        # Save subdomains to file
+        save_data("subdomains", domain, subdomains)
+
     except subprocess.CalledProcessError as e:
         print(colored(f"Error running subfinder: {e}", "red"))
     except FileNotFoundError:
@@ -120,6 +138,9 @@ def check_live_subdomains(subdomains):
     with ThreadPoolExecutor(max_workers=10) as executor:
         results = executor.map(check_subdomain, subdomains)
         live_subdomains.update([res for res in results if res])
+    
+    # Save live subdomains to file
+    save_data("livehosts", domain, live_subdomains)
 
     return live_subdomains
 
@@ -130,6 +151,7 @@ def enumerate_urls(live_subdomains):
     ]
     
     print(colored("\nPerforming URL enumeration on live hosts...", "cyan", attrs=['bold']))
+    found_urls = set()
     for subdomain in live_subdomains:
         for url_suffix in urls_to_check:
             url = f"{subdomain}{url_suffix}"
@@ -142,11 +164,15 @@ def enumerate_urls(live_subdomains):
                 if status == 200:
                     print(colored(f"[INF] Enumerating URL: {url}", "white"))
                     print(colored(f"Trying URL: {url} [Found]", "green"))
+                    found_urls.add(url)
                 else:
                     print(colored(f"Trying URL: {url} [Status: {status} {status_text}]", "red"))
 
             except (requests.ConnectionError, requests.Timeout):
                 pass
+
+    # Save found URLs to file
+    save_data("urls", domain, found_urls)
 
 # Argument parser for command line usage
 def parse_args():
