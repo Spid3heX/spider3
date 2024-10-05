@@ -44,11 +44,11 @@ def main():
     
     # Blank line after finding subdomains
     print()
-    live_subdomains = check_live_subdomains(subdomains)
+    live_subdomains = check_live_subdomains(subdomains, domain)
     
     # Blank line after checking live subdomains
     print()
-    enumerate_urls(live_subdomains)
+    enumerate_urls(live_subdomains, domain)
     
     # Blank line before final result summary
     print()
@@ -108,7 +108,7 @@ def find_subdomains(domain):
     return subdomains
 
 # Check live subdomains with concurrent requests
-def check_live_subdomains(subdomains):
+def check_live_subdomains(subdomains, domain):
     live_subdomains = set()
     print(colored("\nChecking for live subdomains...", "magenta", attrs=['bold']))
 
@@ -145,7 +145,7 @@ def check_live_subdomains(subdomains):
     return live_subdomains
 
 # URL enumeration for live subdomains
-def enumerate_urls(live_subdomains):
+def enumerate_urls(live_subdomains, domain):
     urls_to_check = [
         "/robots.txt", "/sitemap.xml", "/wp-admin.php", "/admin.php", "/login.php", "/config.php", "/wp-config.php", "/server-status", "/admin", "/administrator", "/phpinfo.php", "/backup.zip", "/debug.php", "/test.php", "/upload.php", "/hidden/", "/private/", "/portal/", "/secret/", "/backup/", "/old/", "/dev/", "/beta/", "/staging/", "/error.log", "/forgot_password.php", "/shell.php", "/uploads/", "/console/"
     ]
