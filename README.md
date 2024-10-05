@@ -1,5 +1,7 @@
 # Spider3 Enumeration Tool
 
+![spider3Logo](https://github.com/user-attachments/assets/7f392565-5b08-4c66-9649-33085dae8600)
+
 Spider3 is an enumeration and penetration testing tool designed to help you find subdomains of a target domain, check which subdomains are live, and perform URL enumeration on live hosts. The tool saves results in structured files within a folder corresponding to the target domain.
 
 ## Features
@@ -8,6 +10,9 @@ Spider3 is an enumeration and penetration testing tool designed to help you find
 - Checks for live subdomains and saves them in `livehost.txt`.
 - Performs URL enumeration on live subdomains and saves the results in `urls.txt`.
 - Simple and easy-to-use with just one command.
+
+![a spid3heX property](https://github.com/user-attachments/assets/0c6de5f8-7ba5-4273-9406-f0905f964dd0)
+
 
 ## Installation & Usage Guide for Spider3
 - Clone the Spider3 repository: To install the tool, simply clone the repository from GitHub:
