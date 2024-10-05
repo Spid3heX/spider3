@@ -11,7 +11,6 @@ Spider3 is an enumeration and penetration testing tool designed to help you find
 - Performs URL enumeration on live subdomains and saves the results in `urls.txt`.
 - Simple and easy-to-use with just one command.
 
-![rsz_11a_spid3hex_property](https://github.com/user-attachments/assets/189ce2f6-afd3-4462-8d2f-de7bf2be4ec2)
 
 ## Installation & Usage Guide for Spider3
 - Clone the Spider3 repository: To install the tool, simply clone the repository from GitHub:
