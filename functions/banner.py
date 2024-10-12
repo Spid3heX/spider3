@@ -1,7 +1,6 @@
 import pyfiglet
 from termcolor import colored
 
-# Global variables
 VERSION = "v1.6.0 (latest)"
 CREATOR = "create by heXliO"
 
