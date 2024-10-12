@@ -76,11 +76,10 @@ def enumerate_urls(live_subdomains, domain):
         for url_suffix in urls_to_check:
             url = f"{subdomain}{url_suffix}"
             try:
-                response = requests.get(url, timeout=5)  # Increase timeout to 5 seconds
+                response = requests.get(url, timeout=5)  
                 status = response.status_code
                 status_text = requests.status_codes._codes[status][0].replace('_', ' ').capitalize()
 
-                # Log all checked URLs
                 print(f"Checked URL: {url}, Status: {status}")
                 
                 if status == 200:
