@@ -7,7 +7,6 @@ from functions.banner import banner
 from functions.utils import setup
 from functions.enumeration import find_subdomains, check_live_subdomains, enumerate_urls
 
-# Add the functions directory to the system path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), 'functions')))
 
 def main():
@@ -16,7 +15,7 @@ def main():
         print(colored("Usage: ./spider3.py run", "yellow"))
         sys.exit(1)
 
-    banner()  # Display banner before starting
+    banner()  
     domain = input(colored("Enter Target Domain: ", "red", attrs=['bold']))
     setup(domain)
     
